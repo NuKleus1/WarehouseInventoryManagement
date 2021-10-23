@@ -89,7 +89,7 @@ public class fillDetails extends AppCompatActivity {
                 if(Product.binQuantity.get(i) >= quantity) {
                     Product.binQuantity.put(i, Product.binQuantity.get(i) - quantity);
                     Product.productQuantity.put(productid, Product.productQuantity.get(productid) - quantity);
-                    String s = "From Bin ID:"+i+"\nQuantity Picked: "+quantity+"\nProduct ID: "+productid+"\nCurrent Quantity: "+Product.binQuantity.get(i);
+                    String s = "From Bin ID:"+i+"\nProduct ID: "+productid+"\nQuantity Picked: "+quantity+"\nCurrent Quantity: "+Product.binQuantity.get(i);
                     showText.setText(s);
                     flag = 1;
                 }
