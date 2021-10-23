@@ -2,6 +2,7 @@ package com.example.warehouseinventorymanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getHashMap();
         pickupButton = findViewById(R.id.pickup);
         dropButton = findViewById(R.id.drop);
         addProductButton = findViewById(R.id.addProduct);
@@ -75,23 +78,82 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+        saveHashMap();
     }
 
-    public void saveHashMap(String key , Object obj) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(obj);
-        editor.putString(key,json);
-        editor.apply();
+    public void saveHashMap() {
+        try {
+            SharedPreferences prefs = getApplicationContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            Gson gson = new Gson();
+            editor.putString("productID", gson.toJson(Product.productID));
+            editor.putString("binID", gson.toJson(Product.binId));
+            editor.putString("product", gson.toJson(Product.product));
+            editor.putString("productQuantity", gson.toJson(Product.productQuantity));
+            editor.putString("binQuantity", gson.toJson(Product.binQuantity));
+            editor.putString("binProduct", gson.toJson(Product.binproduct));
+            editor.apply();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public HashMap<Integer,Integer> getHashMap(String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        Gson gson = new Gson();
-        String json = prefs.getString(key,"");
-        java.lang.reflect.Type type = new TypeToken<HashMap<Integer,Integer>>(){}.getType();
-        HashMap<Integer,Integer> obj = gson.fromJson(json, type);
-        return obj;
+    public void getHashMap() {
+        try {
+            SharedPreferences prefs = getApplicationContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<HashMap<Integer, Integer>>() {}.getType();
+
+            String json = prefs.getString("productQuantity", "");
+            if (json != ""){
+                HashMap<Integer, Integer> obj = gson.fromJson(json, type);
+                Product.productQuantity = obj;
+            }
+
+            json = prefs.getString("binQuantity", "");
+            if (json != ""){
+                HashMap<Integer, Integer> obj = gson.fromJson(json, type);
+                Product.binQuantity = obj;
+            }
+
+            json = prefs.getString("binproduct", "");
+            if (json != ""){
+                HashMap<Integer, Integer> obj = gson.fromJson(json, type);
+                Product.binproduct = obj;
+            }
+
+            java.lang.reflect.Type type1 = new TypeToken<HashMap<Integer, String>>() {}.getType();
+            json = prefs.getString("product", "");
+            if (json != ""){
+                HashMap<Integer, String> obj = gson.fromJson(json, type1);
+                Product.product = obj;
+            }
+
+            java.lang.reflect.Type type2 = new TypeToken<ArrayList<Integer>>() {}.getType();
+            json = prefs.getString("productID", "");
+            if (json != ""){
+                ArrayList<Integer> obj = gson.fromJson(json, type2);
+                Product.productID = obj;
+            }
+
+            java.lang.reflect.Type type3 = new TypeToken<ArrayList<Integer>>() {}.getType();
+            json = prefs.getString("binId", "");
+            if (json != ""){
+                ArrayList<Integer> obj = gson.fromJson(json, type3);
+                Product.binId = obj;
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveHashMap();
     }
 }
