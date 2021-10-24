@@ -6,19 +6,19 @@ import java.util.HashMap;
 public class Product {
 
     // product[productID, productName]
-    static HashMap<Integer, String> product = new HashMap<Integer, String>();
+    static HashMap<Integer, String> product = new HashMap<>();
 
-    // productQuantity[productid, quantity]
-    static HashMap<Integer, Integer> productQuantity = new HashMap<Integer, Integer>();
+    // productQuantity[productID, quantity]
+    static HashMap<Integer, Integer> productQuantity = new HashMap<>();
 
     // binQuantity[binId, quantity]
-    static HashMap<Integer, Integer> binQuantity = new HashMap<Integer, Integer>();
+    static HashMap<Integer, Integer> binQuantity = new HashMap<>();
 
     // binproduct[binId, productID]
-    static HashMap<Integer, Integer> binproduct = new HashMap<Integer, Integer>();
+    static HashMap<Integer, Integer> binproduct = new HashMap<>();
 
-    static ArrayList<Integer> productID = new ArrayList<Integer>();
-    static ArrayList<Integer> binId = new ArrayList<Integer>();
+    static ArrayList<Integer> productID = new ArrayList<>();
+    static ArrayList<Integer> binId = new ArrayList<>();
 
     // MAX BIN CAPACITY
     final static int MAX = 1000;

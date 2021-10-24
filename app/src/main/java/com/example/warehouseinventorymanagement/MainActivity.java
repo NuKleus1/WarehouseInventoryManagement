@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("product", gson.toJson(Product.product));
             editor.putString("productQuantity", gson.toJson(Product.productQuantity));
             editor.putString("binQuantity", gson.toJson(Product.binQuantity));
-            editor.putString("binProduct", gson.toJson(Product.binproduct));
+            editor.putString("binproduct", gson.toJson(Product.binproduct));
             editor.apply();
         }catch (Exception e){
             e.printStackTrace();

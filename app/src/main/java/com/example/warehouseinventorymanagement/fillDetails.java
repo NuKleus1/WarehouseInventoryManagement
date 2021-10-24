@@ -50,7 +50,7 @@ public class fillDetails extends AppCompatActivity {
                         int productid = Integer.parseInt(productIDText.getText().toString());
                         int quantity = Integer.parseInt(quantityText.getText().toString());
                         drop(productid, quantity);
-                        Toast.makeText(fillDetails.this, "Drop Update", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(fillDetails.this, "Drop Update", Toast.LENGTH_LONG).show();
                     }catch (Exception e){
                         Toast.makeText(fillDetails.this, "Drop Update Error Occured!", Toast.LENGTH_LONG).show();
                     }
@@ -67,7 +67,8 @@ public class fillDetails extends AppCompatActivity {
 
     private int pickup(int productid, int quantity) {
         if(!Product.productID.contains(productid)){
-            showText.setText("Product ID doesn't Exist. You have to add the Product First and generate an ID");
+            String s = "Product ID doesn't Exist. You have to add the Product First and generate an ID";
+            showText.setText(s);
             return 0;
         }else if(!Product.binproduct.containsValue(productid)){
             String s = "Product ID: "+productid+"  is not in the Inventory. You need to Drop in the Bin First to Pickup";
@@ -76,7 +77,7 @@ public class fillDetails extends AppCompatActivity {
         }else{
 
             // Get Bin Ids containing ProductID
-            ArrayList<Integer> bins = new ArrayList<Integer>();
+            ArrayList<Integer> bins = new ArrayList<>();
             for(Map.Entry<Integer, Integer> entry : Product.binproduct.entrySet()){
                 if (entry.getValue() == productid){
                     bins.add(entry.getKey());
@@ -107,7 +108,7 @@ public class fillDetails extends AppCompatActivity {
 
     }
 
-    int drop(int productid, int quantity){
+    public int drop(int productid, int quantity){
 
         // Check if ProductID exist
         // Check if it was
@@ -136,7 +137,7 @@ public class fillDetails extends AppCompatActivity {
                 if(quantity <= (Product.MAX - Product.binQuantity.get(i))){
                     Product.binQuantity.put(i, Product.binQuantity.get(i)+quantity);
                     Product.productQuantity.put(productid, Product.productQuantity.get(productid)+quantity);
-                    String s = "Dropped Product "+Product.product.get(productid)+"  at Bin ID: "+i+" with Total quantity to: "+Product.binQuantity.get(i);
+                    String s = "Dropped Product "+Product.product.get(productid)+" at Bin ID: "+i+" with Total quantity to: "+Product.binQuantity.get(i);
                     showText.setText(s);
                     Toast.makeText(fillDetails.this, "Drop Location Updated", Toast.LENGTH_SHORT).show();
                     flag = 1;
